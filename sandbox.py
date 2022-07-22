@@ -21,10 +21,11 @@ import pickle
 from transformers import pipeline
 from sentence_transformers import SentenceTransformer, util
 from praw_auth import reddit
+from oai_auth import auth as oai_auth_info
 from test_data_8fltsy import products, brands
 
-openai.organization = "org-rsGr6hjKZD2pNa38lTKhRxsU"
-openai.api_key = "sk-VG5QfrAPN6htNP6pTtf3Dh2IGuDcRfFegxVH723L"
+openai.organization = oai_auth_info["organization"]
+openai.api_key = oai_auth_info["api_key"]
 
 try:
   all_comments_text = pickle.load(open("8fltsy_comments", "rb"))
@@ -63,7 +64,7 @@ score_sum = sum([p[1] for p in final_list])
 final_list = [(p[0], round(p[1]/score_sum * 100)) for p in final_list]
 final_list.sort(key=lambda p: p[1], reverse=True)
 
-# ========= substituted with retriever of comments mentioning product, ranked by votes =========
+# ========= substituted with retrieval of comments mentioning product, ranked by votes =========
 
 # model = SentenceTransformer('multi-qa-MiniLM-L6-cos-v1')
 # product_embeddings = np.array([model.encode(p[0]) for p in final_list]).astype("float32")

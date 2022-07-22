@@ -1,4 +1,5 @@
 praw_auth.py
+oai_auth.py
 
 *.pyc
 *~
